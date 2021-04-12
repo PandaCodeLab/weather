@@ -7,14 +7,27 @@
 </template>
 
 <script>
-import TopInfo from '@/components/TopInfo'
-import Main from '@/components/Main'
-import BottomInfo from '@/components/BottomInfo'
+import TopInfo from '@/components/app/TopInfo'
+import Main from '@/components/app/Main'
+import BottomInfo from '@/components/app/BottomInfo'
+
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'Home',
+  methods: {
+    ...mapActions(['fetchMyCity', 'fetchWeatherData'])
+  },
+  computed: {
+    ...mapGetters(['city'])
+  },
+  watch: {
+    city() {
+      this.fetchWeatherData()
+    }
+  },
   mounted() {
-    console.log(this.$axios)
+    if (this.city === null) this.fetchMyCity()
   },
   components: {
     TopInfo,
