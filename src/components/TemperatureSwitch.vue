@@ -32,6 +32,13 @@ export default {
 
 <style lang="scss" scoped>
 .temperature-switch {
+  &::before {
+    content: 'º';
+    font-size: 2.5rem;
+    position: absolute;
+    left: -20px;
+  }
+  position: relative;
   margin-left: auto;
   font-size: 1.8rem;
   border: 1px solid rgba(255, 255, 255, 0.4);

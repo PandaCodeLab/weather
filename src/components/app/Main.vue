@@ -1,44 +1,71 @@
 <template>
   <div class="main">
     <div class="d-flex">
-      <img
-        src="../../assets/icons/sun.svg"
-        width="140"
-        height="140"
-        alt=""
-        v-if="isSunny"
-      />
-      <img
-        src="../../assets/icons/rain.svg"
-        width="140"
-        height="140"
-        alt=""
-        v-else
-      />
+      <img :src="imgSrc" width="140" height="140" alt="" />
       <div class="temperature-current">
         <span class="value">{{ temperature }}</span>
         <span v-if="isCelsius" class="sign">&#176;</span>
         <span v-else class="sign">&#176;</span>
       </div>
     </div>
-    <div class="temperature-state-text" v-if="isSunny">
-      Преимущественно солнечно
+    <div class="temperature-state-text">
+      Преимущественно
+      {{ weatherObj.label }}
     </div>
-    <div class="temperature-state-text" v-else>Преимущественно осадки</div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 export default {
   computed: {
-    isSunny() {
-      return this.$store.getters.isSunny
+    ...mapGetters(['weatherType']),
+    imgSrc() {
+      return require(`../../assets/icons${this.weatherObj.icon_url}`)
     },
     isCelsius() {
       return this.$store.getters.isCelsius
     },
     temperature() {
       return this.$store.getters.temperature
+    },
+    weatherObj() {
+      if (this.weatherType === 'Rain') {
+        return {
+          label: 'дожди',
+          icon_url: '/rain.svg'
+        }
+      }
+      if (this.weatherType === 'Sun') {
+        return {
+          label: 'солнечно',
+          icon_url: '/sun.svg'
+        }
+      }
+      if (this.weatherType === 'Clouds') {
+        return {
+          label: 'облачно',
+          icon_url: '/cloud.svg'
+        }
+      }
+      if (this.weatherType === 'Clear') {
+        return {
+          label: 'ясно',
+          icon_url: '/partly_cloudy.svg'
+        }
+      }
+      if (this.weatherType === 'Storm') {
+        return {
+          label: 'гроза',
+          icon_url: '/rain.svg'
+        }
+      }
+
+      return {
+        label: 'ясно',
+        icon_url: '/partly_cloudy.svg'
+      }
     }
   }
 }

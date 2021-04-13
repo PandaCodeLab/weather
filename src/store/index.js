@@ -57,7 +57,7 @@ export default new Vuex.Store({
           const windDirection = degConverter(response.data.wind.deg)
 
           const data = {
-            isSunny: response.data.weather[0].main === 'Rain' ? true : false,
+            weatherType: response.data.weather[0].main,
             pressure: response.data.main.pressure,
             humidity: response.data.main.humidity,
             windSpeed: response.data.wind.speed,
@@ -78,7 +78,7 @@ export default new Vuex.Store({
     city: s => s.city,
     homeCity: s => s.homeCity,
     isCelsius: s => s.isCelsius,
-    isSunny: s => s.weather.isSunny,
+    weatherType: s => s.weather.weatherType,
     weather: s => s.weather,
     temperature: state => {
       return state.isCelsius

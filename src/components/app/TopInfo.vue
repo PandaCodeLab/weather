@@ -67,11 +67,16 @@ export default {
         keys: ['name'],
         shouldSort: true
       })
-      const citySelected = fuse.search(search).map(({ item }) => item)
 
-      this.citySelected = {
-        label: citySelected[0].name,
-        name: citySelected[0].name
+      if (!/[^а-яё]/i.test(search)) {
+        const citySelected = fuse.search(search).map(({ item }) => item)
+
+        if (citySelected[0].name) {
+          this.citySelected = {
+            label: citySelected[0].name,
+            name: citySelected[0].name
+          }
+        }
       }
 
       return search.length
@@ -85,11 +90,13 @@ export default {
       }
     },
     async citySelectedHandle() {
-      try {
-        await this.$store.dispatch('fetchWeatherData', this.citySelected.name)
-        this.cityWaitForSelect = false
-      } catch (e) {
-        this.citySelected = ''
+      if (this.citySelected) {
+        try {
+          await this.$store.dispatch('fetchWeatherData', this.citySelected.name)
+          this.cityWaitForSelect = false
+        } catch (e) {
+          this.citySelected = ''
+        }
       }
     }
   },
