@@ -26,16 +26,4 @@ export default {
 
 <style lang="scss">
 @import 'assets/style.css';
-
-@mixin for-phone-only {
-  @media (max-width: 768px) {
-    @content;
-  }
-}
-
-@mixin for-desktop-up {
-  @media (min-width: 1200px) {
-    @content;
-  }
-}
 </style>

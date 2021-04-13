@@ -1,5 +1,5 @@
 <template>
-  <div class="temperature-switch">
+  <div class="temperature-switch" onclick="event.stopPropagation()">
     <span
       class="celsius"
       @click="setTemperatureMode(true)"
@@ -51,6 +51,10 @@ export default {
   span {
     padding: 0.5rem 1.5rem;
     display: inline-block;
+  }
+  @include for-phone-only {
+    position: absolute;
+    right: 2rem;
   }
 }
 </style>

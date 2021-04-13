@@ -1,18 +1,24 @@
 <template>
   <div class="top-info">
-    <v-select
-      onclick="event.stopPropagation()"
-      @input="citySelectedHandle"
-      v-if="cityWaitForSelect"
-      :options="rusCities"
-      placeholder="Выберите город"
-      v-model="citySelected"
-    >
-      <template v-slot:option="option">
-        <span :class="option.icon"></span>
-        {{ option.name }}
-      </template>
-    </v-select>
+    <div class="my-v-select" v-if="cityWaitForSelect">
+      <v-select
+        onclick="event.stopPropagation()"
+        @input="citySelectedHandle"
+        :options="rusCities"
+        placeholder="Выберите город"
+        v-model="citySelected"
+        :clearable="false"
+      />
+
+      <div
+        class="my-v-select-submit"
+        @click="selectSubmitHandler"
+        onclick="event.stopPropagation()"
+      >
+        OK
+      </div>
+    </div>
+
     <div class="block-helper" v-else>
       <div class="city-current">{{ city }}</div>
       <div class="d-flex text--1">
@@ -56,7 +62,16 @@ export default {
       return this.$store.getters.homeCity
     }
   },
+  watch: {
+    searchInput(val) {
+      console.log(val)
+    }
+  },
   methods: {
+    selectSubmitHandler() {
+      console.log('1')
+      document.dispatchEvent(new KeyboardEvent('keypress', { key: 'a' }))
+    },
     async fetchMyCity() {
       if (this.homeCity !== this.city) {
         const myCity = await this.$store.dispatch('fetchMyCity')
@@ -87,6 +102,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.my-v-select {
+  position: relative;
+  &-submit {
+    font-size: 3rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    z-index: 2;
+    transform: translate(0, -50%);
+    color: #1086ff;
+    background: white;
+    padding: 0 3rem;
+    cursor: pointer;
+    @include for-phone-only {
+      font-size: 1.5rem;
+      padding-left: 0;
+    }
+  }
+}
+
 .v-select {
   font-size: 3rem;
   width: 45vw;
@@ -94,6 +129,10 @@ export default {
   border-radius: 8px;
   .vs__actions {
     display: none !important;
+  }
+
+  @include for-phone-only {
+    font-size: 1.5rem;
   }
 }
 
@@ -111,6 +150,9 @@ export default {
 .city-current {
   font-size: 5rem;
   margin-bottom: 5px;
+  @include for-phone-only {
+    font-size: 3rem;
+  }
 }
 
 .my-location,
@@ -120,10 +162,15 @@ export default {
 
 .my-location {
   margin-left: 30px;
+  position: relative;
   img {
     margin-right: 12px;
-    position: relative;
-    top: 3px;
+    position: absolute;
+    top: -3px;
+    left: -25px;
+  }
+  @include for-phone-only {
+    margin-left: 50px;
   }
 }
 </style>

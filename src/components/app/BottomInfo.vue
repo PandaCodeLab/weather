@@ -46,9 +46,19 @@ export default {
   .title {
     font-size: 1.8rem;
     opacity: 0.6;
+    @include for-phone-only {
+      font-size: 1.5rem;
+    }
   }
   .data {
     font-size: 2.5rem;
+    @include for-phone-only {
+      font-size: 1.8rem;
+    }
+  }
+  width: 25%;
+  @include for-phone-only {
+    width: 50%;
   }
 }
 </style>

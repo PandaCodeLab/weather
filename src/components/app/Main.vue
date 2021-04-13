@@ -60,11 +60,17 @@ export default {
     font-size: 20rem;
     position: relative;
     .sign {
-      position: absolute;
+      //position: absolute;
+    }
+    @include for-phone-only {
+      font-size: 10rem;
     }
   }
   &-state-text {
     font-size: 2.5rem;
+    @include for-phone-only {
+      font-size: 2rem;
+    }
   }
 }
 </style>
