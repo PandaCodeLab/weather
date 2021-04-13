@@ -8,11 +8,12 @@
         placeholder="Выберите город"
         v-model="citySelected"
         :clearable="false"
+        :filter="fuseSearch"
       />
 
       <div
         class="my-v-select-submit"
-        @click="selectSubmitHandler"
+        @click="citySelectedHandle"
         onclick="event.stopPropagation()"
       >
         OK
@@ -41,10 +42,8 @@
 
 <script>
 import TemperatureSwitch from '@/components/TemperatureSwitch'
-
+import Fuse from 'fuse.js'
 import rusCities from '@/utils/rusCities'
-
-import { mapActions } from 'vuex'
 
 export default {
   data() {
@@ -62,15 +61,22 @@ export default {
       return this.$store.getters.homeCity
     }
   },
-  watch: {
-    searchInput(val) {
-      console.log(val)
-    }
-  },
   methods: {
-    selectSubmitHandler() {
-      console.log('1')
-      document.dispatchEvent(new KeyboardEvent('keypress', { key: 'a' }))
+    fuseSearch(options, search) {
+      const fuse = new Fuse(options, {
+        keys: ['name'],
+        shouldSort: true
+      })
+      const citySelected = fuse.search(search).map(({ item }) => item)
+
+      this.citySelected = {
+        label: citySelected[0].name,
+        name: citySelected[0].name
+      }
+
+      return search.length
+        ? fuse.search(search).map(({ item }) => item)
+        : fuse.list
     },
     async fetchMyCity() {
       if (this.homeCity !== this.city) {
@@ -79,8 +85,12 @@ export default {
       }
     },
     async citySelectedHandle() {
-      await this.$store.dispatch('fetchWeatherData', this.citySelected.name)
-      this.cityWaitForSelect = false
+      try {
+        await this.$store.dispatch('fetchWeatherData', this.citySelected.name)
+        this.cityWaitForSelect = false
+      } catch (e) {
+        this.citySelected = ''
+      }
     }
   },
   mounted() {
@@ -109,6 +119,7 @@ export default {
     position: absolute;
     right: 0;
     top: 50%;
+    padding-top: 5px;
     z-index: 2;
     transform: translate(0, -50%);
     color: #1086ff;
@@ -118,6 +129,7 @@ export default {
     @include for-phone-only {
       font-size: 1.5rem;
       padding-left: 0;
+      padding-right: 1rem;
     }
   }
 }
