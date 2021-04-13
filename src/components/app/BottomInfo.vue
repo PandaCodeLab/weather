@@ -34,16 +34,21 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-.bottom-info
-  display: flex
-  justify-content: space-between
-  align-items: flex-end
+<style lang="scss" scoped>
+.bottom-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
 
-.data-item
-  .title
-    font-size: 1.8rem
-    opacity: 60%
-  .data
-    font-size: 2.5rem
+.data-item {
+  .title {
+    font-size: 1.8rem;
+    opacity: 0.6;
+  }
+  .data {
+    font-size: 2.5rem;
+  }
+}
 </style>

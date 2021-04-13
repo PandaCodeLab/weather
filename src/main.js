@@ -6,10 +6,10 @@ import store from './store'
 
 import vSelect from 'vue-select'
 import 'vue-select/dist/vue-select.css'
-import Snackbar from 'vuejs-snackbar'
+import Notifications from 'vue-notification'
 
 Vue.component('v-select', vSelect)
-Vue.component('snackbar', Snackbar)
+Vue.use(Notifications)
 
 Vue.config.productionTip = false
 

@@ -18,7 +18,7 @@
       <div class="temperature-current">
         <span class="value">{{ temperature }}</span>
         <span v-if="isCelsius" class="sign">&#176;</span>
-        <span v-else class="sign">&#8457;</span>
+        <span v-else class="sign">&#176;</span>
       </div>
     </div>
     <div class="temperature-state-text" v-if="isSunny">
@@ -44,21 +44,27 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-.main
-  display: flex
-  flex-direction: column
-  justify-content: center
-  align-items: center
-  .d-flex
-    align-items: center
+<style lang="scss" scoped>
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .d-flex {
+    align-items: center;
+  }
+}
 
-.temperature
-  &-current
-    font-size: 20rem
-    position: relative
-    .sign
-      position: absolute
-  &-state-text
-    font-size: 2.5rem
+.temperature {
+  &-current {
+    font-size: 20rem;
+    position: relative;
+    .sign {
+      position: absolute;
+    }
+  }
+  &-state-text {
+    font-size: 2.5rem;
+  }
+}
 </style>

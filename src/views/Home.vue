@@ -21,11 +21,6 @@ export default {
   computed: {
     ...mapGetters(['city'])
   },
-  watch: {
-    city() {
-      this.fetchWeatherData()
-    }
-  },
   mounted() {
     if (this.city === null) this.fetchMyCity()
   },
@@ -37,11 +32,14 @@ export default {
 }
 </script>
 
-<style lang="sass" scoped>
-.top-info
-  height: 20%
-.main
-  height: 60%
-.bottom-info
-  height: 20%
+<style lang="scss" scoped>
+.top-info {
+  height: 20%;
+}
+.main {
+  height: 60%;
+}
+.bottom-info {
+  height: 20%;
+}
 </style>

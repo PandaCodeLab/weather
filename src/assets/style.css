@@ -4,7 +4,7 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 10px;
 }
 
 * {
@@ -24,7 +24,7 @@ body {
   padding: 7.5rem 10rem;
 }
 
-#app > div {
+#app > div:not(.vue-notification-group) {
   height: 100%;
 }
 
@@ -34,5 +34,24 @@ body {
 
 .text--1 {
   font-size: 1.8rem;
-  opacity: 60%;
+  opacity: 0.6;
+}
+
+.vue-notification-template {
+  position: relative;
+  top: 5px;
+  border-left: none !important;
+  border: 2px solid white !important;
+}
+
+.notification-title {
+  font-size: 2rem;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 768px) {
+  #app {
+    padding: 2rem;
+  }
 }
